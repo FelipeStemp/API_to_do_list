@@ -6,7 +6,7 @@ import routes from "./routes/routes";
 
 require("dotenv").config();
 
-const MONGO_URL = process.env.MONGO_URL;
+const MONGO_URL = process.env.MONGO_URL!;
 mongoose.connect(MONGO_URL);
 
 const app = express();
