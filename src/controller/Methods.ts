@@ -67,7 +67,7 @@ export const updateItemByIdOrName = async (Request: express.Request , Response: 
         const nameParams = Request.params.name || null;
         const {name, description, completed} = Request.body;
 
-        const existItem = await getItemNameID(nameParams ? nameParams.toLowerCase() : null, id)
+        const existItem = await getItemNameID(name.toLowerCase(), null);
 
         if(!existItem){
             return Response.status(404).json({error: "Item not found"})
