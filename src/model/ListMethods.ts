@@ -6,7 +6,7 @@ import { List } from "./Model";
 // METODOS GET DO SCHEMA
 export const getItens = () => List.find({})
 
-export const getItemNameID = async (name: string, id: string) =>
+export const getItemNameID = async (name: string | null , id: string | null) =>
     {
         if (name) {
             return await List.findOne({ name }).exec();
