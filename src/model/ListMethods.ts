@@ -6,10 +6,12 @@ import { List } from "./Model";
 // METODOS GET DO SCHEMA
 export const getItens = () => List.find({})
 
-export const getItemNameID = async (name: string) =>
+export const getItemNameID = async (name: string, id: string) =>
     {
         if (name) {
             return await List.findOne({ name: name }).exec();
+        }else if(id){
+            return await List.findById({id : id}).exec();
         }
         return null;
 } 
@@ -30,10 +32,12 @@ export const updateItem = async (name: string | null, id: string | null, values:
 }
 
 // METODO DELETE DO SCHEMA
-export const deleteItem = (name: string) => 
+export const deleteItem = (name: string, id: string) => 
     {
-        if(!name){
-            return;
+        if(name){
+            return List.findOneAndDelete({name: name}).exec();
+        }else if(id)
+        {
+            return List.findByIdAndUpdate({id: id}).exec();
         }
-        return List.findOneAndDelete({name: name}).exec();
 }

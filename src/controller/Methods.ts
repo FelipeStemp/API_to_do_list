@@ -6,20 +6,20 @@ import { createItem, deleteItem, getItemNameID, getItens, updateItem } from '../
 export const createItem_ = async (Request: express.Request , Response: express.Response)=>{
     try{
 
-        const {name, description} = Request.body;
+        const {name, description, id} = Request.body;
 
         if(!name || !description){
             return Response.status(400).json({error: "Name and description are required!"})
         }
 
-        const existItem = await getItemNameID(name.toLowerCase());
+        const existItem = await getItemNameID(name.toLowerCase(), id);
 
         if(existItem){
             return Response.status(409).json({error: "Name already registred"})
         }
 
         const Item = await createItem({
-            name: name.toLowerCase(),
+            name,
             description
         })
 
@@ -46,8 +46,9 @@ export const getItemByIdOrName = async (Request: express.Request , Response: exp
     try{
 
         const name = Request.params.name;
+        const id = Request.params.id;
 
-        const existItem = await getItemNameID(name.toLowerCase());
+        const existItem = await getItemNameID(name.toLowerCase(), id);
 
         if(!existItem){
             return Response.status(404).json({error: "Item not found"})
@@ -62,11 +63,11 @@ export const getItemByIdOrName = async (Request: express.Request , Response: exp
 //Metodos de update para api
 export const updateItemByIdOrName = async (Request: express.Request , Response: express.Response)=>{
     try{
-        const id = Request.params.id || null;
-        const nameParams = Request.params.name || null;
+        const id = Request.params.id;
+        const nameParams = Request.params.name;
         const {name, description, completed} = Request.body;
 
-        const existItem = await getItemNameID(name.toLowerCase());
+        const existItem = await getItemNameID(nameParams.toLowerCase(), id);
 
         if(!existItem){
             return Response.status(404).json({error: "Item not found"})
@@ -88,20 +89,19 @@ export const updateItemByIdOrName = async (Request: express.Request , Response: 
 //Metodo delete para api
 export const deleteItemByIdOrName = async (Request: express.Request , Response: express.Response)=>{
     try{
-        const { name } = Request.body;
-        const normalizedName = name.toLowerCase();
+        const { name, id } = Request.body;
 
-        if(!name){
+        if(!name && !id){
             return Response.status(404).json({error: "Either name or id must be provided"})
         }
 
-        const existItem = await getItemNameID(normalizedName)
+        const existItem = await getItemNameID(name.toLowerCase(), id)
 
         if(!existItem){
             return Response.status(404).json({error: "Item not found"})
         }
         
-        await deleteItem(normalizedName)
+        await deleteItem(name.toLowerCase(), id)
 
         return Response.status(204).json({item: "Item was deleted"})
 
