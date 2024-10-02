@@ -12,7 +12,7 @@ export const getItemNameID = async (name: string | null , id: string | null) =>
             return await List.findOne({ name }).exec();
         }
         if(id){
-            return await List.findById({id }).exec();
+            return await List.findById( id ).exec();
         }
         return null;
 } 
