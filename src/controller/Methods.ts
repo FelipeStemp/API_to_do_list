@@ -36,7 +36,6 @@ export const getAllItens = async (Request: express.Request , Response: express.R
             const Itens = await getItens();
 
             return Response.status(200).json(Itens)
-
         }catch(err){
             return Response.status(500).send(err)
         }
