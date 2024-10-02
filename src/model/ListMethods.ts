@@ -6,11 +6,8 @@ import { List } from "./Model";
 // METODOS GET DO SCHEMA
 export const getItens = () => List.find({})
 
-export const getItemNameID = async (name: string | null, id: string | null) =>
+export const getItemNameID = async (name: string) =>
     {
-        if (id && mongoose.Types.ObjectId.isValid(id)) {
-            return await List.findById(id).exec();
-        }
         if (name) {
             return await List.findOne({ name: name.toLowerCase() }).exec();
         }
@@ -33,7 +30,7 @@ export const updateItem = async (name: string | null, id: string | null, values:
 }
 
 // METODO DELETE DO SCHEMA
-export const deleteItem = (name: string | null, id: string | null) => 
+export const deleteItem = (name: string) => 
     {
         if(!name){
             return List.findByIdAndDelete(id).exec();
