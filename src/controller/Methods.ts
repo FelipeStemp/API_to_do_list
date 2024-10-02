@@ -94,7 +94,7 @@ export const deleteItemByIdOrName = async (Request: express.Request , Response: 
             return Response.status(404).json({error: "Either name or id must be provided"})
         }
 
-        const existItem = await getItemNameID(name.toLowerCase(), id)
+        const existItem = await getItemNameID(name ? name.toLowerCase() : null, id || null)
 
         if(!existItem){
             return Response.status(404).json({error: "Item not found"})
