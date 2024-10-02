@@ -74,7 +74,7 @@ export const updateItemByIdOrName = async (Request: express.Request , Response: 
         }
 
         const Item = await updateItem(nameParams, id, {
-            name,
+            name: name.toLowerCase(),
             description,
             completed
         })
