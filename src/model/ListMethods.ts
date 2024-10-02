@@ -9,9 +9,10 @@ export const getItens = () => List.find({})
 export const getItemNameID = async (name: string, id: string) =>
     {
         if (name) {
-            return await List.findOne({ name: name }).exec();
-        }else if(id){
-            return await List.findById({id : id}).exec();
+            return await List.findOne({ name }).exec();
+        }
+        if(id){
+            return await List.findById({id }).exec();
         }
         return null;
 } 
