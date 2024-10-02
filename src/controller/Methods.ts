@@ -45,7 +45,7 @@ export const getAllItens = async (Request: express.Request , Response: express.R
 export const getItemByIdOrName = async (Request: express.Request , Response: express.Response)=>{
     try{
 
-        const name = Request.params.name || null;
+        const name = Request.params.name;
 
         const existItem = await getItemNameID(name.toLowerCase());
 
@@ -91,7 +91,7 @@ export const deleteItemByIdOrName = async (Request: express.Request , Response: 
         const { name } = Request.body;
         const normalizedName = name.toLowerCase();
 
-        if(!name && !id){
+        if(!name){
             return Response.status(404).json({error: "Either name or id must be provided"})
         }
 
@@ -101,7 +101,7 @@ export const deleteItemByIdOrName = async (Request: express.Request , Response: 
             return Response.status(404).json({error: "Item not found"})
         }
         
-        await deleteItem(normalizedName, id)
+        await deleteItem(normalizedName)
 
         return Response.status(204).json({item: "Item was deleted"})
 
