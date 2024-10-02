@@ -9,7 +9,7 @@ export const getItens = () => List.find({})
 export const getItemNameID = async (name: string) =>
     {
         if (name) {
-            return await List.findOne({ name: name.toLowerCase() }).exec();
+            return await List.findOne({ name: name }).exec();
         }
         return null;
 } 
