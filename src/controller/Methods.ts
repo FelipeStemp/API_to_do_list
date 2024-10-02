@@ -48,7 +48,7 @@ export const getItemByIdOrName = async (Request: express.Request , Response: exp
         const id = Request.params.id || null;
         const name = Request.params.name || null;
 
-        const existItem = await getItemNameID(name.toLowerCase() : null, id);
+        const existItem = await getItemNameID(name.toLowerCase(), id);
 
         if(!existItem){
             return Response.status(404).json({error: "Item not found"})
