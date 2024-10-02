@@ -33,7 +33,7 @@ export const updateItem = async (name: string | null, id: string | null, values:
 export const deleteItem = (name: string) => 
     {
         if(!name){
-            return List.findByIdAndDelete(id).exec();
+            return;
         }
         return List.findOneAndDelete({name: name}).exec();
 }
