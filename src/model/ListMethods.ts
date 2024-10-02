@@ -39,6 +39,6 @@ export const deleteItem = (name: string | null , id: string | null) =>
             return List.findOneAndDelete({name}).exec();
         }else if(id)
         {
-            return List.findByIdAndUpdate(id).exec();
+            return List.findByIdAndDelete(id).exec();
         }
 }
