@@ -33,12 +33,12 @@ export const updateItem = async (name: string | null, id: string | null, values:
 }
 
 // METODO DELETE DO SCHEMA
-export const deleteItem = (name: string, id: string) => 
+export const deleteItem = (name: string | null , id: string | null) => 
     {
         if(name){
-            return List.findOneAndDelete({name: name}).exec();
+            return List.findOneAndDelete({name}).exec();
         }else if(id)
         {
-            return List.findByIdAndUpdate({id: id}).exec();
+            return List.findByIdAndUpdate(id).exec();
         }
 }
