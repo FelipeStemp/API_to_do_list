@@ -100,7 +100,7 @@ export const deleteItemByIdOrName = async (Request: express.Request , Response: 
             return Response.status(404).json({error: "Item not found"})
         }
         
-        await deleteItem(name.toLowerCase(), id)
+        await deleteItem(name ? name.toLowerCase() : null, id || null)
 
         return Response.status(204).json({item: "Item was deleted"})
 
