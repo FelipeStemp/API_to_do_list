@@ -19,7 +19,7 @@ export const createItem_ = async (Request: express.Request , Response: express.R
         }
 
         const Item = await createItem({
-            name,
+            name: name.toLowerCase(),
             description
         })
 
