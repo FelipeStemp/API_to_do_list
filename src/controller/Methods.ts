@@ -12,7 +12,7 @@ export const createItem_ = async (Request: express.Request , Response: express.R
             return Response.status(400).json({error: "Name and description are required!"})
         }
 
-        const existItem = await getItemNameID(name.toLowerCase(), id);
+        const existItem = await getItemNameID(name, id);
 
         if(existItem){
             return Response.status(409).json({error: "Name already registred"})
@@ -44,10 +44,10 @@ export const getAllItens = async (Request: express.Request , Response: express.R
 export const getItemByIdOrName = async (Request: express.Request , Response: express.Response)=>{
     try{
 
-        const name = Request.params.name;
-        const id = Request.params.id;
+        const name = Request.params.name || null;
+        const id = Request.params.id || null;
 
-        const existItem = await getItemNameID(name ? name.toLowerCase() : null, id || null);
+        const existItem = await getItemNameID(name, id);
 
         if(!existItem){
             return Response.status(404).json({error: "Item not found"})
@@ -62,11 +62,11 @@ export const getItemByIdOrName = async (Request: express.Request , Response: exp
 //Metodos de update para api
 export const updateItemByIdOrName = async (Request: express.Request , Response: express.Response)=>{
     try{
-        const id = Request.params.id;
-        const nameParams = Request.params.name;
+        const id = Request.params.id || null;
+        const nameParams = Request.params.name || null;
         const {name, description, completed} = Request.body;
 
-        const existItem = await getItemNameID(nameParams.toLowerCase(), id);
+        const existItem = await getItemNameID(nameParams, id);
 
         if(!existItem){
             return Response.status(404).json({error: "Item not found"})
@@ -81,7 +81,7 @@ export const updateItemByIdOrName = async (Request: express.Request , Response: 
         return Response.status(201).json(Item)
 
     }catch(err){
-        return Response.status(500).send(err)
+        return Response.status(500).send("osadkosakdopakdopsakp")
     }
 }
 
@@ -94,7 +94,7 @@ export const deleteItemByIdOrName = async (Request: express.Request , Response: 
             return Response.status(404).json({error: "Either name or id must be provided"})
         }
 
-        const existItem = await getItemNameID(name ? name.toLowerCase() : null, id || null)
+        const existItem = await getItemNameID(name || null, id || null)
 
         if(!existItem){
             return Response.status(404).json({error: "Item not found"})

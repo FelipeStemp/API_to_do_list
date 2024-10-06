@@ -8,23 +8,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteItem = exports.updateItem = exports.createItem = exports.getItemNameID = exports.getItens = void 0;
 /* eslint-disable @typescript-eslint/no-explicit-any */
-const mongoose_1 = __importDefault(require("mongoose"));
 const Model_1 = require("./Model");
 // METODOS GET DO SCHEMA
 const getItens = () => Model_1.List.find({});
 exports.getItens = getItens;
 const getItemNameID = (name, id) => __awaiter(void 0, void 0, void 0, function* () {
-    if (id && mongoose_1.default.Types.ObjectId.isValid(id)) {
-        return yield Model_1.List.findById(id).exec();
-    }
     if (name) {
-        return yield Model_1.List.findOne({ name: name.toLowerCase() }).exec();
+        name = name.toLowerCase();
+        return yield Model_1.List.findOne({ name }).exec();
+    }
+    if (id) {
+        return yield Model_1.List.findById(id).exec();
     }
     return null;
 });
@@ -44,9 +41,11 @@ const updateItem = (name, id, values) => __awaiter(void 0, void 0, void 0, funct
 exports.updateItem = updateItem;
 // METODO DELETE DO SCHEMA
 const deleteItem = (name, id) => {
-    if (!name) {
+    if (name) {
+        return Model_1.List.findOneAndDelete({ name }).exec();
+    }
+    else if (id) {
         return Model_1.List.findByIdAndDelete(id).exec();
     }
-    return Model_1.List.findOneAndDelete({ name: name }).exec();
 };
 exports.deleteItem = deleteItem;

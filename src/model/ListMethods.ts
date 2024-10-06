@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import mongoose from "mongoose";
 import { List } from "./Model";
 
 
@@ -9,6 +8,7 @@ export const getItens = () => List.find({})
 export const getItemNameID = async (name: string | null , id: string | null) =>
     {
         if (name) {
+            name = name.toLowerCase()
             return await List.findOne({ name }).exec();
         }
         if(id){
@@ -27,6 +27,7 @@ export const createItem = (values: Record<string, any>) => new List(values)
 export const updateItem = async (name: string | null, id: string | null, values: Record<string, any>) => 
     {
         if(!name){
+            
             return List.findByIdAndUpdate(id, values, {new: true})
         }
         return List.findOneAndUpdate({name: name}, values, {new: true})
