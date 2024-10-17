@@ -1,32 +1,44 @@
 
 import express from 'express';
-import { createItem, deleteItem, getItemNameID, getItens, updateItem } from '../model/ListMethods';
+import { createItem, deleteItem, getItemByUserId, getItemNameID, getItens, updateItem } from '../model/ListMethods';
 
 //Metodo de retorno de criação da api
 export const createItem_ = async (Request: express.Request , Response: express.Response)=>{
     try{
 
-        const {name, description, id} = Request.body;
+        const {name, description, id, userId} = Request.body;
 
-        if(!name || !description){
+        if(!name || !description || !userId){
             return Response.status(400).json({error: "Name and description are required!"})
         }
 
         const existItem = await getItemNameID(name, id);
 
         if(existItem){
-            return Response.status(409).json({error: "Name already registred"})
+            return Response.status(409).json({error: "Task already registred"})
         }
 
         const Item = await createItem({
             name,
-            description
+            description,
+            userId
         })
 
         return Response.status(201).json(Item);
 
     }catch(err){
         return Response.status(500).send(err)
+    }
+}
+
+export const getItemByIdUser = async (Request: express.Request , Response: express.Response) => {
+    try{
+        const {userId} = Request.body;
+        const itens = await getItemByUserId(userId)
+
+        return Response.status(200).json(itens)
+    }catch(error){
+        return Response.status(500).send(error)
     }
 }
 

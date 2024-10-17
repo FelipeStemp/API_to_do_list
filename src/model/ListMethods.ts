@@ -17,6 +17,14 @@ export const getItemNameID = async (name: string | null , id: string | null) =>
         return null;
 } 
 
+export const getItemByUserId = async (userId: string) =>
+{
+    if(userId){
+        return await List.findOne({userId}).exec();
+    }
+    return null
+}
+
 // METODO POST DO SCHEMA
 export const createItem = (values: Record<string, any>) => new List(values)
 .save()
