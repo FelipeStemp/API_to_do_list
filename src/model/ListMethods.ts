@@ -20,7 +20,7 @@ export const getItemNameID = async (name: string | null , id: string | null) =>
 export const getItemByUserId = async (userId: string) =>
 {
     if(userId){
-        return await List.findOne({userId}).exec();
+        return await List.find({userId}).exec();
     }
     return null
 }
